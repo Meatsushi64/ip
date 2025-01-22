@@ -1,5 +1,5 @@
 public class Jen {
-    static String greeting = "Hello! I'm Jen. \n " +
+    static String greeting = "Hello! I'm Jen. \n" +
                       "What can I do for you?\n";
     static String line = "_______________________\n";
     static String goodbye = "Bye. Hope to see you again soon!\n";
