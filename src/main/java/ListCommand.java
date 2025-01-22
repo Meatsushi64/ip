@@ -1,8 +1,8 @@
 public class ListCommand extends Command {
     @Override
-    public void run(Storage store, UI ui) {
+    public void run(Storage storage, UI ui) {
         ui.line();
-        store.printStorage();
+        storage.printStorage();
         ui.line();
     }
 }

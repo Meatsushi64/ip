@@ -5,9 +5,9 @@ public class Jen {
     private boolean isRunning = true;
 
     public Jen() {
-        ui = new UI();
-        parser = new Parser();
-        storage = new Storage();
+        this.ui = new UI();
+        this.parser = new Parser();
+        this.storage = new Storage();
     }
 
     public static void main(String[] args) {
@@ -16,17 +16,17 @@ public class Jen {
     }
 
     public void start() {
-        ui.greet();
+        this.ui.greet();
         while (isRunning) {
             Command cmd = parser.read(ui.readUserInput());
 
             cmd.run(storage, ui);
 
             if (cmd instanceof ByeCommand) {
-                isRunning = false;
+                this.isRunning = false;
             }
         }
-        ui.bye();
+        this.ui.bye();
     }
 
 

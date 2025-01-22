@@ -1,18 +1,26 @@
 import java.util.ArrayList;
 public class Storage {
-    ArrayList<String> store;
+    protected ArrayList<Task> store;
 
     public Storage() {
-        store = new ArrayList<String>(100);
+        this.store = new ArrayList<Task>(100);
     }
 
     public void store(String item) {
-        store.add(item);
+        this.store.add(new Task(item));
     }
 
     public void printStorage() {
-        for (int i = 0; i < store.size(); i++) {
-            System.out.println((i + 1) + ". " + store.get(i));
+        for (int i = 0; i < this.store.size(); i++) {
+            System.out.println((i + 1) + ". " + this.store.get(i));
         }
+    }
+
+    public void markAsDone(int i) {
+        this.store.get(i - 1).markAsDone();
+    }
+
+    public void markAsNotDone(int i) {
+        this.store.get(i - 1).markAsNotDone();
     }
 }

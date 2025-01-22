@@ -6,12 +6,23 @@ public class Parser {
 
 
     public Command read(String input) {
-        if (Objects.equals(input, "bye")) {
-            return new ByeCommand();
-        } else if (Objects.equals(input, "list")) {
-            return new ListCommand();
-        } else {
-            return new AddCommand(input);
+        String[] arrayInput = input.split(" ", 2);
+        String comd = arrayInput[0];
+
+        switch (comd) {
+            case "bye":
+                return new ByeCommand();
+            case "list":
+                return new ListCommand();
+            case "add":
+                return new AddCommand(arrayInput[1]);
+            case "mark":
+                return new MarkCommand(arrayInput[1]);
+            case "unmark":
+                return new UnmarkCommand(arrayInput[1]);
+            default:
+                return new ByeCommand();
         }
+
     }
 }

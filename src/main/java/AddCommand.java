@@ -4,8 +4,8 @@ public class AddCommand extends Command{
         toAdd = item;
     }
     @Override
-    public void run(Storage store,  UI ui) {
-        store.store(toAdd);
+    public void run(Storage storage,  UI ui) {
+        storage.store(toAdd);
         ui.printMessage("I've added [" + toAdd + "] to the list!");
 
     }
