@@ -1,6 +1,7 @@
 import java.util.Scanner;
 public class UI {
-    Scanner scanner;
+    private Scanner scanner;
+    private Storage storage;
 
     public UI(){
         scanner = new Scanner(System.in);
@@ -18,13 +19,12 @@ public class UI {
 
     public String readUserInput() { // reads user input and returns the string
         String s = scanner.nextLine();
-        printMessage(s);
         return s;
     }
 
     public void printMessage(String msg) {
         line();
-        System.out.println("I read: " + msg);
+        System.out.println("Log: " + msg);
         line();
     }
     public void bye() {
