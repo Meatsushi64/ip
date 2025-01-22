@@ -23,4 +23,8 @@ public class Storage {
     public void markAsNotDone(int i) {
         this.store.get(i - 1).markAsNotDone();
     }
+
+    public String taskToString(int i) {
+        return this.store.get(i - 1).toString();
+    }
 }

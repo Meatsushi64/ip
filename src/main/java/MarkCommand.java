@@ -8,6 +8,7 @@ public class MarkCommand extends Command {
     @Override
     public void run(Storage storage, UI ui) {
         storage.markAsDone(index);
-        ui.printMessage("I have marked task as done!");
+        ui.printMessage("I have marked task as done!\n" + storage.taskToString(index));
+        ;
     }
 }

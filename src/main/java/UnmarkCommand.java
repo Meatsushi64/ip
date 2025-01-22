@@ -7,6 +7,7 @@ public class UnmarkCommand extends Command{
     @Override
     public void run(Storage storage, UI ui) {
         storage.markAsNotDone(index);
-        ui.printMessage("I have unmarked the task!");
+        ui.printMessage("I have unmarked the task! \n" + storage.taskToString(index));
+
     }
 }
