@@ -2,12 +2,16 @@ import java.util.ArrayList;
 public class Storage {
     protected ArrayList<Task> store;
 
+    protected int size;
+
     public Storage() {
         this.store = new ArrayList<Task>(100);
+        this.size = 0;
     }
 
-    public void store(String item) {
-        this.store.add(new Task(item));
+    public void store(Task item) {
+        this.store.add(item);
+        this.size++;
     }
 
     public void printStorage() {

@@ -14,8 +14,18 @@ public class Parser {
                 return new ByeCommand();
             case "list":
                 return new ListCommand();
-            case "add":
-                return new AddCommand(arrayInput[1]);
+            case "todo":
+                String todo = input.substring(5);
+                return new AddCommand(new ToDo(todo));
+            case "deadline":
+                String[] deadline = input.substring(9).split(" /by ");
+                return new AddCommand(new Deadline(deadline[0], deadline[1]));
+            case "event":
+                String[] event = input.substring(6).split(" /");
+                String desc = event[0];
+                String from = event[1].substring(5);
+                String to = event[2].substring(3);
+                return new AddCommand(new Event(desc, from, to));
             case "mark":
                 return new MarkCommand(arrayInput[1]);
             case "unmark":
