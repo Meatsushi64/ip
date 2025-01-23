@@ -1,3 +1,3 @@
 public abstract class Command {
-    public abstract void run(Storage store, UI ui);
+    public abstract void run(Storage store, UI ui) throws OutOfIndexException;
 }

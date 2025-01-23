@@ -53,13 +53,29 @@ public class Parser {
                 String to = timeParts[1].trim();
 
                 return new AddCommand(new Event(desc, from, to));
+            case "delete":
 
+                if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
+                    throw new JenException("delete command missing index!\n" +
+                            "Format: delete <index>");
+                }
+                try {
+                    return new DeleteCommand(Integer.parseInt(arrayInput[1]));
+                } catch (NumberFormatException e) {
+                    throw new JenException("index is not a number!");
+                }
             case "mark":
-                return new MarkCommand(arrayInput[1]);
-
+                try {
+                    return new MarkCommand(Integer.parseInt(arrayInput[1]));
+                } catch (NumberFormatException e) {
+                    throw new JenException("index is not a number!");
+                }
             case "unmark":
-                return new UnmarkCommand(arrayInput[1]);
-
+                try {
+                    return new UnmarkCommand(Integer.parseInt(arrayInput[1]));
+                } catch (NumberFormatException e) {
+                    throw new JenException("index is not a number!");
+                }
             default:
                 throw new JenException("Sorry, I don't understand your command");
         }

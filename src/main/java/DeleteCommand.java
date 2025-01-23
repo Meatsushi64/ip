@@ -1,7 +1,6 @@
-public class UnmarkCommand extends Command{
+public class DeleteCommand extends Command {
     private int index;
-    public UnmarkCommand(int i) {
-
+    public DeleteCommand(int i) {
         this.index = i;
     }
     @Override
@@ -9,9 +8,7 @@ public class UnmarkCommand extends Command{
         if (!storage.isWithinSize(this.index)) {
             throw new OutOfIndexException("Input index outside of list size");
         }
-        storage.markAsNotDone(index);
-        ui.printMessage("I have unmarked the task! \n" + storage.taskToString(index) +
+        ui.printMessage("I have removed this task:\n" + storage.deleteItem(this.index) +
                 "\n" + storage.sizeToString());
-
     }
 }

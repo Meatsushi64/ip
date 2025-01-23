@@ -27,7 +27,7 @@ public class Jen {
                 if (cmd instanceof ByeCommand) {
                     this.isRunning = false;
                 }
-            } catch (JenException e) {
+            } catch (JenException | OutOfIndexException e) {
                 ui.printError(e);
             }
         }

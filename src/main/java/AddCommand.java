@@ -6,7 +6,7 @@ public class AddCommand extends Command{
     @Override
     public void run(Storage storage,  UI ui) {
         storage.store(this.toAdd);
-        ui.printMessage("I've added [" + toAdd + "] to the list!");
+        ui.printMessage("I've added this task to the list! \n" + toAdd + "\n" + storage.sizeToString());
 
     }
 }
