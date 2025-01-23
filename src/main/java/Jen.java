@@ -18,12 +18,17 @@ public class Jen {
     public void start() {
         this.ui.greet();
         while (isRunning) {
-            Command cmd = parser.read(ui.readUserInput());
+            try {
+                Command cmd = parser.read(ui.readUserInput());
 
-            cmd.run(storage, ui);
 
-            if (cmd instanceof ByeCommand) {
-                this.isRunning = false;
+                cmd.run(storage, ui);
+
+                if (cmd instanceof ByeCommand) {
+                    this.isRunning = false;
+                }
+            } catch (JenException e) {
+                ui.printError(e);
             }
         }
         this.ui.bye();

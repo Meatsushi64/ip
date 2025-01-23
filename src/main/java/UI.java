@@ -26,6 +26,9 @@ public class UI {
         System.out.println(msg);
         this.line();
     }
+    public void printError(Exception e) {
+        System.out.println(e.getMessage());
+    }
     public void bye() {
         System.out.println(Msg.GOODBYE);
     }
