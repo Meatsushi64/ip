@@ -8,20 +8,20 @@ public class Parser {
 
     public Command read(String input) throws JenException{
         String[] arrayInput = input.split(" ", 2);
-        String comd = arrayInput[0];
-        // System.out.println("length of arrayInput is " + arrayInput.length);
+        CommandType comd = getCmdType(arrayInput[0]);
+
         switch (comd) {
-            case "bye":
+            case BYE:
                 return new ByeCommand();
-            case "list":
+            case LIST:
                 return new ListCommand();
-            case "todo":
+            case TODO:
                 if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
                     throw new JenException("Todo description cannot be empty!\n" +
                             "Format: todo <desc>");
                 }
                 return new AddCommand(new ToDo(arrayInput[1].trim()));
-            case "deadline":
+            case DEADLINE:
                 if (arrayInput.length < 2 || !arrayInput[1].trim().contains("/by")) {
                     throw new JenException("Deadline command incomplete!\n" +
                             "Format: deadline <desc> /by <time>");
@@ -32,7 +32,7 @@ public class Parser {
                             "Format: deadline <desc> /by <time>");
                 }
                 return new AddCommand(new Deadline(deadline[0].trim(), deadline[1].trim()));
-            case "event":
+            case EVENT:
 
                 if (arrayInput.length < 2 || !arrayInput[1].trim().contains("/from")
                         || !arrayInput[1].trim().contains("/to")) {
@@ -53,7 +53,7 @@ public class Parser {
                 String to = timeParts[1].trim();
 
                 return new AddCommand(new Event(desc, from, to));
-            case "delete":
+            case DELETE:
 
                 if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
                     throw new JenException("delete command missing index!\n" +
@@ -64,13 +64,13 @@ public class Parser {
                 } catch (NumberFormatException e) {
                     throw new JenException("index is not a number!");
                 }
-            case "mark":
+            case MARK:
                 try {
                     return new MarkCommand(Integer.parseInt(arrayInput[1]));
                 } catch (NumberFormatException e) {
                     throw new JenException("index is not a number!");
                 }
-            case "unmark":
+            case UNMARK:
                 try {
                     return new UnmarkCommand(Integer.parseInt(arrayInput[1]));
                 } catch (NumberFormatException e) {
@@ -80,5 +80,13 @@ public class Parser {
                 throw new JenException("Sorry, I don't understand your command");
         }
 
+    }
+
+    private CommandType getCmdType(String word) {
+        try {
+            return CommandType.valueOf(word.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return CommandType.UNKNOWN;
+        }
     }
 }
