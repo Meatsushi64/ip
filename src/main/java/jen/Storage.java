@@ -1,3 +1,5 @@
+package jen;
+import jen.tasks.*;
 import java.util.ArrayList;
 public class Storage {
     protected ArrayList<Task> store;

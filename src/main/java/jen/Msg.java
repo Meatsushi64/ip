@@ -1,3 +1,4 @@
+package jen;
 public class Msg {
     // Reference class for all messages written by the bot
     public static final String LINE = "_______________________";

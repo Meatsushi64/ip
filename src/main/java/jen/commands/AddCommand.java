@@ -1,3 +1,7 @@
+package jen.commands;
+import jen.tasks.Task;
+import jen.Storage;
+import jen.UI;
 public class AddCommand extends Command{
     private Task toAdd;
     public AddCommand(Task task) {

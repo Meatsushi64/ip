@@ -1,3 +1,4 @@
+package jen.tasks;
 public class Task {
 
     protected String description;
