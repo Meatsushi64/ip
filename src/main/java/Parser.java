@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Parser {
     // control centre based on what the user inputs
     // handles what the user inputs into the UI
@@ -76,7 +78,33 @@ public class Parser {
         default:
             throw new JenException("Sorry, I don't understand your command");
         }
+    }
 
+    public Task readSaveLine(String saveLine) throws JenException{
+        // save line saved as T ; 1 ; title ; extra info
+        String[] details = saveLine.split(" ; ");
+        switch (details[0]) {
+            case "T":
+                ToDo t = new ToDo(details[2]);
+                if (Objects.equals(details[1], "1")) {
+                    t.markAsDone();
+                }
+                return t;
+            case "D":
+                Deadline d = new Deadline(details[2], details[3]);
+                if (Objects.equals(details[1], "1")) {
+                    d.markAsDone();
+                }
+                return d;
+            case "E":
+                Event e = new Event(details[2], details[3], details[4]);
+                if (Objects.equals(details[1], "1")) {
+                    e.markAsDone();
+                }
+                return e;
+            default:
+                throw new JenException("Save file read error");
+        }
     }
 
     private CommandType getCmdType(String word) {

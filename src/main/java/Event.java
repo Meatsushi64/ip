@@ -7,7 +7,11 @@ public class Event extends Task{
         this.from = from;
         this.to = to;
     }
-
+    @Override
+    public String toSaveFormat() {
+        String done = this.isDone ? "1 ; " : "0 ; ";
+        return "E ; " + done + this.description + " ; " + this.from + " ; " + this.to;
+    }
     @Override
     public String toString() {
         return "[E]" + super.toString() + " (from: " + from + " to: " + this.to +")";

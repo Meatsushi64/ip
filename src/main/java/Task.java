@@ -20,6 +20,10 @@ public class Task {
     public void markAsNotDone() {
         this.isDone = false;
     }
+    public String toSaveFormat() {
+        String done = this.isDone ? "1 ; " : "0 ; ";
+        return "T ; " + done + this.description;
+    }
 
     @Override
     public String toString() {

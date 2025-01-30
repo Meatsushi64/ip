@@ -9,6 +9,10 @@ public class Storage {
         this.size = 0;
     }
 
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
     public void store(Task item) {
         this.store.add(item);
         this.size++;
