@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
 public class Parser {
@@ -16,21 +18,33 @@ public class Parser {
             return new ListCommand();
         case TODO:
             if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
+                // checks if input has sufficient arguments, and has a description
                 throw new JenException("Todo description cannot be empty!\n"
                         + "Format: todo <desc>");
             }
             return new AddCommand(new ToDo(arrayInput[1].trim()));
+
         case DEADLINE:
             if (arrayInput.length < 2 || !arrayInput[1].trim().contains("/by")) {
+                // checks if has sufficient arguments for deadline command
                 throw new JenException("Deadline command incomplete!\n"
-                        + "Format: deadline <desc> /by <time>");
+                        + "Format: deadline <desc> /by <yyyy-mm-dd>");
             }
             String[] deadline = arrayInput[1].split(" /by "); // returns [<desc>, <time>]
             if (deadline.length < 2) {
-                throw new JenException("Deadline command does not have a deadline!\n" +
-                        "Format: deadline <desc> /by <time>");
+                throw new JenException("Deadline command does not have a deadline!\n"
+                        + "Format: deadline <desc> /by <yyyy-mm-dd>");
             }
-            return new AddCommand(new Deadline(deadline[0].trim(), deadline[1].trim()));
+            try {
+                // convert user input to LocalDate format
+                String dateString = deadline[1].trim();
+                LocalDate date = LocalDate.parse(dateString);
+                return new AddCommand(new Deadline(deadline[0].trim(), date));
+
+            } catch (DateTimeParseException e) {
+                throw new JenException("Deadline command has unreadable date format!\n"
+                        + "Format: deadline <desc> /by <yyyy-mm-dd>");
+            }
         case EVENT:
 
             if (arrayInput.length < 2 || !arrayInput[1].trim().contains("/from")
@@ -44,8 +58,8 @@ public class Parser {
             String[] timeParts = event[1].split(" /to ", 2); // splits into [<time>, <time>]
 
             if (timeParts.length < 2 || timeParts[0].trim().isEmpty() || timeParts[1].trim().isEmpty()) {
-                throw new JenException("Event command does not have a complete timeframe!\n" +
-                        "Format: event <desc> /from <time> /by <time>");
+                throw new JenException("Event command does not have a complete timeframe!\n"
+                        + "Format: event <desc> /from <time> /by <time>");
             }
 
             String from = timeParts[0].trim();
@@ -91,7 +105,7 @@ public class Parser {
                 }
                 return t;
             case "D":
-                Deadline d = new Deadline(details[2], details[3]);
+                Deadline d = new Deadline(details[2], LocalDate.parse(details[3]));
                 if (Objects.equals(details[1], "1")) {
                     d.markAsDone();
                 }
