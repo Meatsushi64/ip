@@ -1,3 +1,4 @@
+package jen;
 import java.util.Scanner;
 public class UI {
     private Scanner scanner;

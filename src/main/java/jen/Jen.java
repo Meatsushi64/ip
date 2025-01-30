@@ -1,3 +1,5 @@
+package jen;
+import jen.commands.*;
 public class Jen {
     private UI ui;
     private Parser parser;
