@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.Scanner;
-
+/**
+ * Handles saving and loading tasks to and from a file.
+ * This class manages file operations for persistent storage of tasks.
+ */
 public class Save {
     // creates a txt file to save the current list to a file
     // for now lets save the file into docs ../../../docs
@@ -15,10 +18,20 @@ public class Save {
     private File file;
     private FileWriter fileWriter;
 
+    /**
+     * Constructs a new {@code Save} instance with the specified file path.
+     *
+     * @param filePath The path to the file used for saving tasks.
+     */
     public Save(String filePath) {
         this.FILEPATH = filePath;
     }
-
+    /**
+     * Checks if a save file exists. If not, creates a new save file.
+     *
+     * @return {@code true} if a new file was created, {@code false} if the file already existed.
+     * @throws JenException If an error occurs while checking or creating the file.
+     */
     public boolean checkSaves() throws JenException {
         try {
             this.file = new File(FILEPATH);
@@ -45,7 +58,13 @@ public class Save {
         }
     }
 
-
+    /**
+     * Reads the save file and loads tasks into storage.
+     *
+     * @param storage The storage where tasks will be loaded.
+     * @param parser  The parser used to interpret saved task data.
+     * @throws JenException If an error occurs while reading the save file.
+     */
     public void readSave(Storage storage, Parser parser) throws JenException{
         // reads the existing save file
         try {
@@ -59,6 +78,12 @@ public class Save {
             System.err.println(e);
         }
     }
+    /**
+     * Writes the current tasks in storage to the save file.
+     *
+     * @param storage The storage containing tasks to be saved.
+     * @throws JenException If an error occurs while writing to the file.
+     */
     public void writeSave(Storage storage) throws JenException {
         // stores the current storage into the file
         try {
@@ -74,6 +99,11 @@ public class Save {
         }
 
     }
+    /**
+     * Main method (currently unused).
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
 
     }

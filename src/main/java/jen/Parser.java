@@ -5,12 +5,21 @@ import jen.tasks.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
-
+/**
+ * Handles user input parsing and command interpretation.
+ * This class processes user commands and converts them into executable actions.
+ */
 public class Parser {
     // control centre based on what the user inputs
     // handles what the user inputs into the UI
 
-
+    /**
+     * Reads and processes the user input, converting it into a command.
+     *
+     * @param input The user input string.
+     * @return The corresponding {@code Command} object.
+     * @throws JenException If the input is invalid or unrecognized.
+     */
     public Command read(String input) throws JenException{
         String[] arrayInput = input.split(" ", 2);
         CommandType comd = getCmdType(arrayInput[0]);
@@ -97,7 +106,13 @@ public class Parser {
             throw new JenException("Sorry, I don't understand your command");
         }
     }
-
+    /**
+     * Reads a line from the save file and converts it into a {@code Task} object.
+     *
+     * @param saveLine The line from the save file.
+     * @return The corresponding {@code Task} object.
+     * @throws JenException If the save file line is invalid.
+     */
     public Task readSaveLine(String saveLine) throws JenException{
         // save line saved as T ; 1 ; title ; extra info
         String[] details = saveLine.split(" ; ");
@@ -124,7 +139,12 @@ public class Parser {
                 throw new JenException("Save file read error");
         }
     }
-
+    /**
+     * Converts a string command into a {@code CommandType} enum.
+     *
+     * @param word The command word to be converted.
+     * @return The corresponding {@code CommandType}, or {@code UNKNOWN} if not recognized.
+     */
     private CommandType getCmdType(String word) {
         try {
             return CommandType.valueOf(word.toUpperCase());
