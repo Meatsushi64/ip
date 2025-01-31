@@ -108,4 +108,17 @@ public class Storage {
     public String taskToString(int i) {
         return this.tasks.get(i - 1).toString();
     }
+
+    /**
+     * Returns the number of tasks in the list.
+     * @return Number of tasks in the list.
+     */
+    public void findTasks(String keyword) {
+        for (int i = 0; i < this.tasks.size(); i++) {
+            Task t = this.tasks.get(i);
+            if (t.getDescription().contains(keyword)) {
+                System.out.println((i + 1) + ". " + t);
+            }
+        }
+    }
 }

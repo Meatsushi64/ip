@@ -105,6 +105,13 @@ public class Parser {
                 throw new JenException("index is not a number!");
             }
 
+        case FIND:
+            if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
+                throw new JenException("find command missing keyword!\n" +
+                        "Format: find <keyword>");
+            }
+            return new FindCommand(arrayInput[1].trim());
+
         default:
             throw new JenException("Sorry, I don't understand your command");
         }

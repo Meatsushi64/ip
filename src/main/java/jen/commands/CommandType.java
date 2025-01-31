@@ -24,6 +24,9 @@ public enum CommandType {
     /** Represents a Bye command to exit the chatbot. */
     BYE,
 
+    /** Represents a Find command to search for tasks. */
+    FIND,
+
     /** Represents an unknown or unrecognized command. */
     UNKNOWN
 }
