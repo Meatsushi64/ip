@@ -11,7 +11,7 @@ public class Jen {
         this.ui = new UI();
         this.parser = new Parser();
         this.storage = new Storage();
-        this.save = new Save();
+        this.save = new Save("saves/saveFile.txt");
     }
 
     public static void main(String[] args) {
