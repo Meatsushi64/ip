@@ -61,4 +61,7 @@ public class Task {
         return "[" + getStatusIcon() +"] " + this.description;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
 }
