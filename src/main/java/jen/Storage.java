@@ -78,7 +78,7 @@ public class Storage {
 
     /**
      * Marks the task at index (i - 1) as complete.
-     * @param i
+     * @param i Index of the Task to be marked as complete.
      */
     public void markAsDone(int i) {
         this.tasks.get(i - 1).markAsDone();
@@ -101,17 +101,18 @@ public class Storage {
     }
 
     /**
-     * Returns String representation of the current task at index (i - 1)
+     * Returns String representation of the current task at index (i - 1).
      * @param i Index of the Task to be converted to a String.
-     * @return String representation of the Task at index (i - 1)
+     * @return String representation of the Task at index (i - 1).
      */
     public String taskToString(int i) {
         return this.tasks.get(i - 1).toString();
     }
 
     /**
-     * Returns the number of tasks in the list.
-     * @return Number of tasks in the list.
+     * Returns the number of tasks in the list matching the keyword.
+     * @param keyword Keyword to search for in the list of tasks.
+     * @return Number of tasks in the list that contain the keyword.
      */
     public void findTasks(String keyword) {
         for (int i = 0; i < this.tasks.size(); i++) {
