@@ -1,5 +1,6 @@
 package jen;
-import jen.commands.*;
+import jen.commands.ByeCommand;
+import jen.commands.Command;
 
 /**
  * The main class for the Jen chatbot application.
