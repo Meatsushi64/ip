@@ -27,7 +27,7 @@ class SaveTest {
         File testFile = new File(TEST_FILE_PATH);
         assertFalse(testFile.exists(), "Test file should not exist before checkSaves call");
 
-        boolean result = save.checkSaves();
+        boolean result = save.hasSaveFile();
 
         assertTrue(testFile.exists(), "checkSaves should create the file if it does not exist");
         assertTrue(result, "checkSaves should return true when a new file is created");
@@ -39,7 +39,7 @@ class SaveTest {
         boolean created = testFile.createNewFile();
         assertTrue(created, "Test setup should create the file before checkSaves call");
 
-        boolean result = save.checkSaves();
+        boolean result = save.hasSaveFile();
 
         assertFalse(result, "checkSaves should return false if the file already exists");
     }

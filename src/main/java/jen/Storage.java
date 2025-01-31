@@ -1,4 +1,5 @@
 package jen;
+
 import jen.tasks.*;
 import java.util.ArrayList;
 
@@ -6,15 +7,20 @@ import java.util.ArrayList;
  * This class represents a storage system for tasks.
  */
 public class Storage {
-    protected ArrayList<Task> store;
-
+    /**
+     * ArrayList of Tasks to store the tasks.
+     */
+    protected ArrayList<Task> tasks;
+    /**
+     * Number of tasks in the list.
+     */
     protected int size;
 
     /**
      * Constructor for the storage class
      */
     public Storage() {
-        this.store = new ArrayList<Task>(100);
+        this.tasks = new ArrayList<Task>(100);
         this.size = 0;
     }
 
@@ -35,7 +41,7 @@ public class Storage {
      * @param item Task to be added to the list.
      */
     public void store(Task item) {
-        this.store.add(item);
+        this.tasks.add(item);
         this.size++;
     }
 
@@ -43,8 +49,8 @@ public class Storage {
      * Prints the string representation of all the Tasks in the current list.
      */
     public void printStorage() {
-        for (int i = 0; i < this.store.size(); i++) {
-            System.out.println((i + 1) + ". " + this.store.get(i));
+        for (int i = 0; i < this.tasks.size(); i++) {
+            System.out.println((i + 1) + ". " + this.tasks.get(i));
         }
     }
 
@@ -57,13 +63,13 @@ public class Storage {
      */
     public Task deleteItem(int i) {
         this.size--;
-        return this.store.remove(i - 1);
+        return this.tasks.remove(i - 1);
     }
 
     /**
      * Checks whether the index i is within the number
-     * @param i
-     * @return
+     * @param i Index to be checked
+     * @return boolean representing whether the index is within the size of the list.
      */
     public boolean isWithinSize(int i) {
         // return true when index is less than or equal to number of items in list
@@ -75,12 +81,12 @@ public class Storage {
      * @param i
      */
     public void markAsDone(int i) {
-        this.store.get(i - 1).markAsDone();
+        this.tasks.get(i - 1).markAsDone();
     }
 
     /**
      * Returns a String message announcing the number of Tasks left in the storage.
-     * @return
+     * @return String message announcing the number of Tasks left in the storage.
      */
     public String sizeToString() {
         return "You currently have " + this.size + " tasks in the list";
@@ -88,18 +94,18 @@ public class Storage {
 
     /**
      * Marks the Task at index (i - 1) as completed.
-     * @param i
+     * @param i Index of the Task to be marked as completed.
      */
     public void markAsNotDone(int i) {
-        this.store.get(i - 1).markAsNotDone();
+        this.tasks.get(i - 1).markAsNotDone();
     }
 
     /**
      * Returns String representation of the current task at index (i - 1)
-     * @param i
-     * @return
+     * @param i Index of the Task to be converted to a String.
+     * @return String representation of the Task at index (i - 1)
      */
     public String taskToString(int i) {
-        return this.store.get(i - 1).toString();
+        return this.tasks.get(i - 1).toString();
     }
 }

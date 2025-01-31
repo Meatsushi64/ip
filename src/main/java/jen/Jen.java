@@ -24,7 +24,8 @@ public class Jen {
 
     /**
      * Constructs a new instance of Jen.
-     * Initializes the UI, Parser, Storage, and Save components.
+     * Initializes the UI, Parser, Storage, and Save components. saves/saveFile.txt is set as the
+     * address for the save file text.
      */
     public Jen() {
         this.ui = new UI();
@@ -51,7 +52,7 @@ public class Jen {
     public void start() {
         this.ui.greet();
         try {
-            if (this.save.checkSaves()) {
+            if (this.save.hasSaveFile()) {
                 this.ui.printMessage("No save file detected, new save file created!");
             } else {
                 this.ui.printMessage("Save file detected, loading current list");
@@ -75,11 +76,13 @@ public class Jen {
                 this.ui.printError(e);
             }
         }
+
         try {
             this.save.writeSave(this.storage);
         } catch (JenException e) {
             this.ui.printError(e);
         }
+
         this.ui.bye();
     }
 

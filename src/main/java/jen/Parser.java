@@ -1,4 +1,5 @@
 package jen;
+
 import jen.commands.*;
 import jen.tasks.*;
 
@@ -8,11 +9,9 @@ import java.util.Objects;
 /**
  * Handles user input parsing and command interpretation.
  * This class processes user commands and converts them into executable actions.
+ * Also parses saved task data from storage
  */
 public class Parser {
-    // control centre based on what the user inputs
-    // handles what the user inputs into the UI
-
     /**
      * Reads and processes the user input, converting it into a command.
      *
@@ -20,7 +19,7 @@ public class Parser {
      * @return The corresponding {@code Command} object.
      * @throws JenException If the input is invalid or unrecognized.
      */
-    public Command read(String input) throws JenException{
+    public Command read(String input) throws JenException {
         String[] arrayInput = input.split(" ", 2);
         CommandType comd = getCmdType(arrayInput[0]);
 
@@ -58,8 +57,8 @@ public class Parser {
                 throw new JenException("Deadline command has unreadable date format!\n"
                         + "Format: deadline <desc> /by <yyyy-mm-dd>");
             }
-        case EVENT:
 
+        case EVENT:
             if (arrayInput.length < 2 || !arrayInput[1].trim().contains("/from")
                     || !arrayInput[1].trim().contains("/to")) {
                 // checks if command contains the keywords
@@ -79,6 +78,7 @@ public class Parser {
             String to = timeParts[1].trim();
 
             return new AddCommand(new Event(desc, from, to));
+
         case DELETE:
 
             if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
@@ -90,18 +90,21 @@ public class Parser {
             } catch (NumberFormatException e) {
                 throw new JenException("index is not a number!");
             }
+
         case MARK:
             try {
                 return new MarkCommand(Integer.parseInt(arrayInput[1]));
             } catch (NumberFormatException e) {
                 throw new JenException("index is not a number!");
             }
+
         case UNMARK:
             try {
                 return new UnmarkCommand(Integer.parseInt(arrayInput[1]));
             } catch (NumberFormatException e) {
                 throw new JenException("index is not a number!");
             }
+
         default:
             throw new JenException("Sorry, I don't understand your command");
         }
