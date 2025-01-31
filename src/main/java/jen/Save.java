@@ -10,25 +10,41 @@ import java.util.Scanner;
 public class Save {
     // creates a txt file to save the current list to a file
     // for now lets save the file into docs ../../../docs
-    private static final String FILEPATH = "saves/saveFile.txt";
+    protected final String FILEPATH;
     private Scanner scanner;
     private File file;
     private FileWriter fileWriter;
 
-    public Save() {
+    public Save(String filePath) {
+        this.FILEPATH = filePath;
     }
 
-    public boolean checkSaves() throws JenException{
-        // check if the save file exists.
+    public boolean checkSaves() throws JenException {
         try {
             this.file = new File(FILEPATH);
-            return file.createNewFile();
 
+            // Ensure parent directories exist
+            File parentDir = this.file.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                if (!parentDir.mkdirs()) {
+                    throw new IOException("Failed to create directory: " + parentDir.getAbsolutePath());
+                }
+            }
+
+            // Create the file if it does not exist
+            boolean isNewFileCreated = this.file.createNewFile();
+
+            // Check if file is writable
+            if (!this.file.canWrite()) {
+                throw new IOException("File exists but is not writable: " + this.file.getAbsolutePath());
+            }
+
+            return isNewFileCreated;
         } catch (IOException e) {
-            System.err.println(e);
-            throw new JenException(e.getMessage());
+            throw new JenException("Error checking or creating save file: " + e.getMessage());
         }
     }
+
 
     public void readSave(Storage storage, Parser parser) throws JenException{
         // reads the existing save file
