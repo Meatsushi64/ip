@@ -1,11 +1,12 @@
 package jen;
+
 import jen.tasks.Task;
-import jen.Parser;
-import java.io.File;
 import java.io.IOException;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.Scanner;
+
 /**
  * Handles saving and loading tasks to and from a file.
  * This class manages file operations for persistent storage of tasks.
@@ -13,7 +14,7 @@ import java.util.Scanner;
 public class Save {
     // creates a txt file to save the current list to a file
     // for now lets save the file into docs ../../../docs
-    protected final String FILEPATH;
+    private final String FILE_PATH;
     private Scanner scanner;
     private File file;
     private FileWriter fileWriter;
@@ -24,7 +25,7 @@ public class Save {
      * @param filePath The path to the file used for saving tasks.
      */
     public Save(String filePath) {
-        this.FILEPATH = filePath;
+        this.FILE_PATH = filePath;
     }
     /**
      * Checks if a save file exists. If not, creates a new save file.
@@ -32,9 +33,9 @@ public class Save {
      * @return {@code true} if a new file was created, {@code false} if the file already existed.
      * @throws JenException If an error occurs while checking or creating the file.
      */
-    public boolean checkSaves() throws JenException {
+    public boolean hasSaveFile() throws JenException {
         try {
-            this.file = new File(FILEPATH);
+            this.file = new File(FILE_PATH);
 
             // Ensure parent directories exist
             File parentDir = this.file.getParentFile();
@@ -75,7 +76,7 @@ public class Save {
                 storage.store(t);
             }
         } catch (FileNotFoundException e) {
-            System.err.println(e);
+            throw new JenException(e.getMessage());
         }
     }
     /**
@@ -97,14 +98,6 @@ public class Save {
         } catch (IOException e) {
             throw new JenException("Save file not found");
         }
-
-    }
-    /**
-     * Main method (currently unused).
-     *
-     * @param args Command-line arguments.
-     */
-    public static void main(String[] args) {
 
     }
 

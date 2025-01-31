@@ -6,11 +6,11 @@ package jen.tasks;
 public class Event extends Task{
 
     /** The start time of the event. */
-    protected String from;
+    private String from;
 
     /** The end time of the event. */
 
-    protected String to;
+    private String to;
 
     /**
      * Constructs an {@code Event} task with the specified description, start time, and end time.
