@@ -5,10 +5,11 @@ import java.util.Scanner;
  * Handles user interaction for the chatbot.
  * This class manages input and output operations.
  */
+@SuppressWarnings("checkstyle:Regexp")
 public class UI {
     /** Scanner object for reading user input. */
     private Scanner scanner;
-
+    private StringBuilder response = new StringBuilder();
     /**
      * Constructs a {@code UI} instance.
      * Initializes the scanner for user input.
@@ -52,6 +53,7 @@ public class UI {
         this.line();
         System.out.println(msg);
         this.line();
+        response.append(msg);
     }
 
     /**
@@ -68,5 +70,11 @@ public class UI {
      */
     public void bye() {
         System.out.println(Msg.GOODBYE);
+    }
+
+    public String getResponse() {
+        String out = this.response.toString();
+        this.response = new StringBuilder();
+        return out;
     }
 }

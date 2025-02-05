@@ -24,7 +24,7 @@ public class FindCommand extends Command {
      */
     @Override
     public void run(Storage storage, UI ui) {
-        ui.printMessage("Here are the matching tasks in your list:");
-        storage.findTasks(keyword);
+        ui.printMessage("Here are the matching tasks in your list:\n");
+        ui.printMessage(storage.findTasks(keyword));
     }
 }

@@ -49,10 +49,12 @@ public class Storage {
     /**
      * Prints the string representation of all the Tasks in the current list.
      */
-    public void printStorage() {
+    public String printStorage() {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < this.tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + this.tasks.get(i));
+            sb.append((i + 1) + ". " + this.tasks.get(i) + "\n");
         }
+        return sb.toString();
     }
 
     /**
@@ -114,12 +116,18 @@ public class Storage {
      * Returns the number of tasks in the list matching the keyword.
      * @param keyword Keyword to search for in the list of tasks.
      */
-    public void findTasks(String keyword) {
+    public String findTasks(String keyword) {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < this.tasks.size(); i++) {
             Task t = this.tasks.get(i);
             if (t.getDescription().contains(keyword)) {
-                System.out.println((i + 1) + ". " + t);
+                sb.append((i + 1) + ". " + t + "\n");
             }
         }
+        return sb.toString();
+    }
+
+    public Task getTask(int i) {
+        return this.tasks.get(i);
     }
 }

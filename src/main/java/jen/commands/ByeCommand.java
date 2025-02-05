@@ -2,6 +2,7 @@ package jen.commands;
 
 import jen.Storage;
 import jen.UI;
+
 /**
  * Represents a command to exit the chatbot.
  * This command does not perform any action when executed.
@@ -16,6 +17,6 @@ public class ByeCommand extends Command {
      */
     @Override
     public void run(Storage store, UI ui) {
-        // nothing happens
+        ui.printMessage("Goodbye! Hope to see you again soon!");
     }
 }

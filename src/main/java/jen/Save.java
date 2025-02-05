@@ -92,8 +92,8 @@ public class Save {
         // stores the current storage into the file
         try {
             this.fileWriter = new FileWriter(this.file);
-            while (!storage.isEmpty()) {
-                Task t = storage.deleteItem(1);
+            for (int i = 0; i < storage.size; i++) {
+                Task t = storage.getTask(i);
                 this.fileWriter.write(t.toSaveFormat());
                 this.fileWriter.write(System.lineSeparator());
             }
