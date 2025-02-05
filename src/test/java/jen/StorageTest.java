@@ -1,8 +1,14 @@
 package jen;
-import jen.tasks.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import jen.tasks.Task;
+import jen.tasks.ToDo;
+
 
 public class StorageTest {
     private Storage storage;
@@ -11,7 +17,7 @@ public class StorageTest {
         storage = new Storage();
     }
     @Test
-    void testDeleteItem_SingleDeletion() {
+    void testDeleteItemSingleDeletion() {
         Task task = new ToDo("Sample Task");
         storage.store(task);
         assertEquals(1, storage.size, "Storage should have 1 task before deletion");
@@ -23,7 +29,7 @@ public class StorageTest {
     }
 
     @Test
-    void testDeleteItem_MultipleDeletions() {
+    void testDeleteItemMultipleDeletions() {
         Task task1 = new ToDo("Task 1");
         Task task2 = new ToDo("Task 2");
         Task task3 = new ToDo("Task 3");
@@ -42,6 +48,7 @@ public class StorageTest {
         assertEquals(task1.toString(), storage.taskToString(1), "First task should still be Task 1");
         assertEquals(task3.toString(), storage.taskToString(2), "Second task should now be Task 3");
     }
+    @SuppressWarnings("checkstyle:MethodName")
     @Test
     void testDeleteItem_DeletesCorrectTask() {
         Task task1 = new ToDo("First Task");
@@ -55,6 +62,7 @@ public class StorageTest {
         assertEquals(task2.toString(), storage.taskToString(1), "Remaining task should be the second task");
     }
 
+    @SuppressWarnings("checkstyle:MethodName")
     @Test
     void testDeleteItem_SizeReduction() {
         Task task1 = new ToDo("Task 1");
@@ -72,6 +80,7 @@ public class StorageTest {
         assertTrue(storage.isEmpty(), "Storage should be empty");
     }
 
+    @SuppressWarnings("checkstyle:MethodName")
     @Test
     void testDeleteItem_ThrowsExceptionForInvalidIndex() {
         Task task = new ToDo("Task X");
@@ -87,6 +96,7 @@ public class StorageTest {
                 "Should throw exception when deleting at a negative index");
     }
 
+    @SuppressWarnings("checkstyle:MethodName")
     @Test
     void testDeleteItem_EmptyStorage() {
         assertThrows(IndexOutOfBoundsException.class, () -> storage.deleteItem(1),

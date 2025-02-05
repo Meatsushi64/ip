@@ -66,7 +66,6 @@ public class Jen {
             try {
                 Command cmd = parser.read(ui.readUserInput());
 
-
                 cmd.run(storage, ui);
 
                 if (cmd instanceof ByeCommand) {

@@ -13,7 +13,7 @@ public class UI {
      * Constructs a {@code UI} instance.
      * Initializes the scanner for user input.
      */
-    public UI(){
+    public UI() {
         scanner = new Scanner(System.in);
     }
 
@@ -60,7 +60,7 @@ public class UI {
      * @param e The exception containing the error message.
      */
     public void printError(Exception e) {
-        System.out.println("Error: "+ e.getMessage());
+        System.out.println("Error: " + e.getMessage());
     }
 
     /**

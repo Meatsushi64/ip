@@ -1,11 +1,13 @@
 package jen.commands;
-import jen.tasks.Task;
+
 import jen.Storage;
 import jen.UI;
+import jen.tasks.Task;
+
 /**
  * Represents a command to add a task to the task list.
  */
-public class AddCommand extends Command{
+public class AddCommand extends Command {
     /** The task to be added. */
     private Task toAdd;
     /**
@@ -24,7 +26,7 @@ public class AddCommand extends Command{
      * @param ui The UI to display messages.
      */
     @Override
-    public void run(Storage storage,  UI ui) {
+    public void run(Storage storage, UI ui) {
         storage.store(this.toAdd);
         ui.printMessage("I've added this task to the list! \n" + toAdd + "\n" + storage.sizeToString());
 

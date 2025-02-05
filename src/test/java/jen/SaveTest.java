@@ -1,16 +1,20 @@
 package jen;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+
 
 class SaveTest {
     private Save save;
-    private static final String TEST_FILE_PATH = "saves/testSaveFile.txt";
+    @SuppressWarnings({"checkstyle:DeclarationOrder", "checkstyle:ModifierOrder"})
+    private final static String TEST_FILE_PATH = "saves/testSaveFile.txt";
 
     @BeforeEach
     void setUp() {
@@ -23,7 +27,7 @@ class SaveTest {
     }
 
     @Test
-    void testCheckSaves_FileDoesNotExist() throws JenException {
+    void testCheckSavesFileDoesNotExist() throws JenException {
         File testFile = new File(TEST_FILE_PATH);
         assertFalse(testFile.exists(), "Test file should not exist before checkSaves call");
 
@@ -34,7 +38,7 @@ class SaveTest {
     }
 
     @Test
-    void testCheckSaves_FileAlreadyExists() throws JenException, IOException {
+    void testCheckSavesFileAlreadyExists() throws JenException, IOException {
         File testFile = new File(TEST_FILE_PATH);
         boolean created = testFile.createNewFile();
         assertTrue(created, "Test setup should create the file before checkSaves call");

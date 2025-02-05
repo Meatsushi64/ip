@@ -1,11 +1,24 @@
 package jen;
 
-import jen.commands.*;
-import jen.tasks.*;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
+
+import jen.commands.AddCommand;
+import jen.commands.ByeCommand;
+import jen.commands.Command;
+import jen.commands.CommandType;
+import jen.commands.DeleteCommand;
+import jen.commands.FindCommand;
+import jen.commands.ListCommand;
+import jen.commands.MarkCommand;
+import jen.commands.UnmarkCommand;
+import jen.tasks.Deadline;
+import jen.tasks.Event;
+import jen.tasks.Task;
+import jen.tasks.ToDo;
+
+
 /**
  * Handles user input parsing and command interpretation.
  * This class processes user commands and converts them into executable actions.
@@ -82,8 +95,8 @@ public class Parser {
         case DELETE:
 
             if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
-                throw new JenException("delete command missing index!\n" +
-                        "Format: delete <index>");
+                throw new JenException("delete command missing index!\n"
+                        + "Format: delete <index>");
             }
             try {
                 return new DeleteCommand(Integer.parseInt(arrayInput[1]));
@@ -107,8 +120,8 @@ public class Parser {
 
         case FIND:
             if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
-                throw new JenException("find command missing keyword!\n" +
-                        "Format: find <keyword>");
+                throw new JenException("find command missing keyword!\n"
+                        + "Format: find <keyword>");
             }
             return new FindCommand(arrayInput[1].trim());
 
@@ -123,30 +136,30 @@ public class Parser {
      * @return The corresponding {@code Task} object.
      * @throws JenException If the save file line is invalid.
      */
-    public Task readSaveLine(String saveLine) throws JenException{
+    public Task readSaveLine(String saveLine) throws JenException {
         // save line saved as T ; 1 ; title ; extra info
         String[] details = saveLine.split(" ; ");
         switch (details[0]) {
-            case "T":
-                ToDo t = new ToDo(details[2]);
-                if (Objects.equals(details[1], "1")) {
-                    t.markAsDone();
-                }
-                return t;
-            case "D":
-                Deadline d = new Deadline(details[2], LocalDate.parse(details[3]));
-                if (Objects.equals(details[1], "1")) {
-                    d.markAsDone();
-                }
-                return d;
-            case "E":
-                Event e = new Event(details[2], details[3], details[4]);
-                if (Objects.equals(details[1], "1")) {
-                    e.markAsDone();
-                }
-                return e;
-            default:
-                throw new JenException("Save file read error");
+        case "T":
+            ToDo t = new ToDo(details[2]);
+            if (Objects.equals(details[1], "1")) {
+                t.markAsDone();
+            }
+            return t;
+        case "D":
+            Deadline d = new Deadline(details[2], LocalDate.parse(details[3]));
+            if (Objects.equals(details[1], "1")) {
+                d.markAsDone();
+            }
+            return d;
+        case "E":
+            Event e = new Event(details[2], details[3], details[4]);
+            if (Objects.equals(details[1], "1")) {
+                e.markAsDone();
+            }
+            return e;
+        default:
+            throw new JenException("Save file read error");
         }
     }
     /**

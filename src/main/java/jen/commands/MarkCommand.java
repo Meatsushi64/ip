@@ -34,7 +34,7 @@ public class MarkCommand extends Command {
             throw new OutOfIndexException("Input index outside of list size");
         }
         storage.markAsDone(index);
-        ui.printMessage("I have marked task as done!\n" + storage.taskToString(index) +
-                "\n" + storage.sizeToString());
+        ui.printMessage("I have marked task as done!\n" + storage.taskToString(index)
+                + "\n" + storage.sizeToString());
     }
 }

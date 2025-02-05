@@ -30,7 +30,7 @@ public class DeleteCommand extends Command {
         if (!storage.isWithinSize(this.index)) {
             throw new OutOfIndexException("Input index outside of list size");
         }
-        ui.printMessage("I have removed this task:\n" + storage.deleteItem(this.index) +
-                "\n" + storage.sizeToString());
+        ui.printMessage("I have removed this task:\n" + storage.deleteItem(this.index)
+                + "\n" + storage.sizeToString());
     }
 }

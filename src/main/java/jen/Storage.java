@@ -1,7 +1,8 @@
 package jen;
 
-import jen.tasks.*;
 import java.util.ArrayList;
+
+import jen.tasks.Task;
 
 /**
  * This class represents a storage system for tasks.
@@ -112,7 +113,6 @@ public class Storage {
     /**
      * Returns the number of tasks in the list matching the keyword.
      * @param keyword Keyword to search for in the list of tasks.
-     * @return Number of tasks in the list that contain the keyword.
      */
     public void findTasks(String keyword) {
         for (int i = 0; i < this.tasks.size(); i++) {

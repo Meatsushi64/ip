@@ -30,8 +30,8 @@ public class UnmarkCommand extends Command {
             throw new OutOfIndexException("Input index outside of list size");
         }
         storage.markAsNotDone(index);
-        ui.printMessage("I have unmarked the task! \n" + storage.taskToString(index) +
-                "\n" + storage.sizeToString());
+        ui.printMessage("I have unmarked the task! \n" + storage.taskToString(index)
+                + "\n" + storage.sizeToString());
 
     }
 }

@@ -1,11 +1,13 @@
 package jen;
 
-import jen.tasks.Task;
-import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
+
+import jen.tasks.Task;
+
 
 /**
  * Handles saving and loading tasks to and from a file.
@@ -14,6 +16,7 @@ import java.util.Scanner;
 public class Save {
     // creates a txt file to save the current list to a file
     // for now lets save the file into docs ../../../docs
+    @SuppressWarnings({"checkstyle:AbbreviationAsWordInName", "CheckStyle"})
     private final String FILE_PATH;
     private Scanner scanner;
     private File file;
@@ -66,7 +69,7 @@ public class Save {
      * @param parser  The parser used to interpret saved task data.
      * @throws JenException If an error occurs while reading the save file.
      */
-    public void readSave(Storage storage, Parser parser) throws JenException{
+    public void readSave(Storage storage, Parser parser) throws JenException {
         // reads the existing save file
         try {
             this.scanner = new Scanner(file);

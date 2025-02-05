@@ -1,4 +1,8 @@
 package jen.commands;
+/**
+ * Represents the type of command that can be executed by the chatbot.
+ * This enumeration lists the different types of commands that the chatbot can recognize.
+ */
 public enum CommandType {
     /** Represents a To-Do command. */
     TODO,

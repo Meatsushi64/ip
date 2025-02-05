@@ -3,7 +3,7 @@ package jen.tasks;
  * Represents an event task.
  * This task has a description, a start time, and an end time.
  */
-public class Event extends Task{
+public class Event extends Task {
 
     /** The start time of the event. */
     private String from;
@@ -42,6 +42,6 @@ public class Event extends Task{
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from + " to: " + this.to +")";
+        return "[E]" + super.toString() + " (from: " + from + " to: " + this.to + ")";
     }
 }
