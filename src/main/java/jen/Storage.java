@@ -130,4 +130,8 @@ public class Storage {
     public Task getTask(int i) {
         return this.tasks.get(i);
     }
+
+    public void addNoteToTask(int index, String note) {
+        this.tasks.get(index - 1).addNoteToTask(note);
+    }
 }

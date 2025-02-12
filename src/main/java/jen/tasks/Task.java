@@ -1,4 +1,7 @@
 package jen.tasks;
+
+import java.util.Objects;
+
 /**
  * Represents a generic task.
  * This is the base class for different types of tasks.
@@ -8,15 +11,18 @@ public class Task {
     protected String description;
     /** Indicates whether the task is completed. */
     protected boolean isDone;
+    /** The notes of the task. */
+    protected String notes;
 
     /**
      * Constructs a {@code Task} with the specified description.
      *
      * @param description The description of the task.
      */
-    public Task(String description) {
+    public Task(String description, String notes) {
         this.description = description;
         this.isDone = false;
+        this.notes = notes;
     }
 
     /**
@@ -49,7 +55,7 @@ public class Task {
      */
     public String toSaveFormat() {
         String done = this.isDone ? "1 ; " : "0 ; ";
-        return "T ; " + done + this.description;
+        return "T ; " + done + this.description + " ; " + getNotes() + " ; ";
     }
     /**
      * Returns a string representation of the task.
@@ -58,10 +64,17 @@ public class Task {
      */
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + this.description;
+        return "[" + getStatusIcon() + "] " + this.description + " || " + getNotes();
     }
 
     public String getDescription() {
         return this.description;
+    }
+    public String getNotes() {
+        return Objects.equals(this.notes, "") ? "<no notes>" : this.notes;
+    }
+
+    public void addNoteToTask(String note) {
+        this.notes = note;
     }
 }

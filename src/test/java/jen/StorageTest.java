@@ -18,7 +18,7 @@ public class StorageTest {
     }
     @Test
     void testDeleteItemSingleDeletion() {
-        Task task = new ToDo("Sample Task");
+        Task task = new ToDo("Sample Task", "notes");
         storage.store(task);
         assertEquals(1, storage.size, "Storage should have 1 task before deletion");
 
@@ -30,9 +30,9 @@ public class StorageTest {
 
     @Test
     void testDeleteItemMultipleDeletions() {
-        Task task1 = new ToDo("Task 1");
-        Task task2 = new ToDo("Task 2");
-        Task task3 = new ToDo("Task 3");
+        Task task1 = new ToDo("Task 1", "notes");
+        Task task2 = new ToDo("Task 2", "notes");
+        Task task3 = new ToDo("Task 3", "notes");
 
         storage.store(task1);
         storage.store(task2);
@@ -51,8 +51,8 @@ public class StorageTest {
     @SuppressWarnings("checkstyle:MethodName")
     @Test
     void testDeleteItem_DeletesCorrectTask() {
-        Task task1 = new ToDo("First Task");
-        Task task2 = new ToDo("Second Task");
+        Task task1 = new ToDo("First Task", "notes");
+        Task task2 = new ToDo("Second Task", "notes");
         storage.store(task1);
         storage.store(task2);
 
@@ -65,8 +65,8 @@ public class StorageTest {
     @SuppressWarnings("checkstyle:MethodName")
     @Test
     void testDeleteItem_SizeReduction() {
-        Task task1 = new ToDo("Task 1");
-        Task task2 = new ToDo("Task 2");
+        Task task1 = new ToDo("Task 1", "notes");
+        Task task2 = new ToDo("Task 2", "notes");
 
         storage.store(task1);
         storage.store(task2);
@@ -83,7 +83,7 @@ public class StorageTest {
     @SuppressWarnings("checkstyle:MethodName")
     @Test
     void testDeleteItem_ThrowsExceptionForInvalidIndex() {
-        Task task = new ToDo("Task X");
+        Task task = new ToDo("Task X", "notes");
         storage.store(task);
 
         assertThrows(IndexOutOfBoundsException.class, () -> storage.deleteItem(2),
