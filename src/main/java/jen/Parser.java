@@ -57,7 +57,7 @@ public class Parser {
             return parseMarkInput(arrayInput);
 
         case UNMARK:
-            return parseMarkInput(arrayInput);
+            return parseUnmarkInput(arrayInput);
 
         case FIND:
             return parseFindInput(arrayInput);
