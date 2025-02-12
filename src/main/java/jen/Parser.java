@@ -12,6 +12,7 @@ import jen.commands.DeleteCommand;
 import jen.commands.FindCommand;
 import jen.commands.ListCommand;
 import jen.commands.MarkCommand;
+import jen.commands.NoteCommand;
 import jen.commands.UnmarkCommand;
 import jen.tasks.Deadline;
 import jen.tasks.Event;
@@ -62,6 +63,8 @@ public class Parser {
         case FIND:
             return parseFindInput(arrayInput);
 
+        case NOTE:
+            return parseNoteInput(arrayInput);
         default:
             throw new JenException("Sorry, I don't understand your command");
         }
@@ -74,23 +77,23 @@ public class Parser {
      * @throws JenException If the save file line is invalid.
      */
     public Task readSaveLine(String saveLine) throws JenException {
-        // save line saved as T ; 1 ; title ; extra info
+        // save line saved as T ; 1 ; title ; notes ;  <extra info>
         String[] details = saveLine.split(" ; ");
         switch (details[0]) {
         case "T":
-            ToDo t = new ToDo(details[2]);
+            ToDo t = new ToDo(details[2], details[3]);
             if (Objects.equals(details[1], "1")) {
                 t.markAsDone();
             }
             return t;
         case "D":
-            Deadline d = new Deadline(details[2], LocalDate.parse(details[3]));
+            Deadline d = new Deadline(details[2], details[3], LocalDate.parse(details[4]));
             if (Objects.equals(details[1], "1")) {
                 d.markAsDone();
             }
             return d;
         case "E":
-            Event e = new Event(details[2], details[3], details[4]);
+            Event e = new Event(details[2], details[3], details[4], details[5]);
             if (Objects.equals(details[1], "1")) {
                 e.markAsDone();
             }
@@ -128,7 +131,7 @@ public class Parser {
         }
         assert arrayInput.length > 1 : "Todo command does not have a description!";
 
-        return new AddCommand(new ToDo(arrayInput[1].trim()));
+        return new AddCommand(new ToDo(arrayInput[1].trim(), ""));
     }
 
     /**
@@ -156,7 +159,7 @@ public class Parser {
             // convert user input to LocalDate format
             String dateString = deadline[1].trim();
             LocalDate date = LocalDate.parse(dateString);
-            return new AddCommand(new Deadline(deadline[0].trim(), date));
+            return new AddCommand(new Deadline(deadline[0].trim(), "", date));
 
         } catch (DateTimeParseException e) {
             throw new JenException("Deadline command has unreadable date format!\n"
@@ -192,7 +195,7 @@ public class Parser {
         String from = timeParts[0].trim();
         String to = timeParts[1].trim();
 
-        return new AddCommand(new Event(desc, from, to));
+        return new AddCommand(new Event(desc, "", from, to));
     }
 
     /**
@@ -270,5 +273,28 @@ public class Parser {
         assert arrayInput.length > 1 : "Find command does not have a keyword!";
 
         return new FindCommand(arrayInput[1].trim());
+    }
+    /**
+     * Parses the user input for a note command.
+     *
+     * @param arrayInput The user input split into an array.
+     * @return The corresponding {@code Command} object.
+     * @throws JenException If the input is invalid or incomplete.
+     */
+    private Command parseNoteInput(String[] arrayInput) throws JenException {
+        if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
+            throw new JenException("note command missing task index!\n"
+                    + "Format: note <index> <note>");
+        }
+        String[] noteParts = arrayInput[1].split(" ", 2);
+        int index = Integer.parseInt(noteParts[0]);
+        String note = noteParts[1];
+
+
+        try {
+            return new NoteCommand(index, note);
+        } catch (NumberFormatException e) {
+            throw new JenException("index is not a number!");
+        }
     }
 }

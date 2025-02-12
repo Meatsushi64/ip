@@ -19,8 +19,8 @@ public class Event extends Task {
      * @param from The start time of the event.
      * @param to The end time of the event.
      */
-    public Event(String description, String from, String to) {
-        super(description);
+    public Event(String description, String notes, String from, String to) {
+        super(description, notes);
         this.from = from;
         this.to = to;
     }
@@ -33,7 +33,7 @@ public class Event extends Task {
     @Override
     public String toSaveFormat() {
         String done = this.isDone ? "1 ; " : "0 ; ";
-        return "E ; " + done + this.description + " ; " + this.from + " ; " + this.to;
+        return "E ; " + done + this.description + " ; " + getNotes() + " ; " + this.from + " ; " + this.to;
     }
     /**
      * Returns a string representation of the event task.

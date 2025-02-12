@@ -31,6 +31,9 @@ public enum CommandType {
     /** Represents a Find command to search for tasks. */
     FIND,
 
+    /** Represents a Note command to add a note to a task. */
+    NOTE,
+
     /** Represents an unknown or unrecognized command. */
     UNKNOWN
 }

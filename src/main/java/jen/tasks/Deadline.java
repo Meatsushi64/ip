@@ -16,8 +16,8 @@ public class Deadline extends Task {
      * @param description The description of the deadline task.
      * @param by The due date of the task.
      */
-    public Deadline(String description, LocalDate by) {
-        super(description);
+    public Deadline(String description, String notes, LocalDate by) {
+        super(description, notes);
         this.by = by;
     }
     /**
@@ -28,7 +28,7 @@ public class Deadline extends Task {
     @Override
     public String toSaveFormat() {
         String done = this.isDone ? "1 ; " : "0 ; ";
-        return "D ; " + done + this.description + " ; " + this.by;
+        return "D ; " + done + this.description + " ; " + getNotes() + ";" + this.by;
     }
     /**
      * Returns a string representation of the deadline task.
