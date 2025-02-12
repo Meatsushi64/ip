@@ -69,17 +69,9 @@ public class Jen {
      */
     public void start() {
         this.ui.greet();
-        try {
-            if (this.save.hasSaveFile()) {
-                this.ui.printMessage("No save file detected, new save file created!");
-            } else {
-                this.ui.printMessage("Save file detected, loading current list");
-                // read the save file
-                this.save.readSave(this.storage, this.parser);
-            }
-        } catch (JenException e) {
-            this.ui.printError(e);
-        }
+
+        loadSaves();
+
         while (isRunning) {
             try {
                 Command cmd = parser.read(ui.readUserInput());
@@ -94,11 +86,7 @@ public class Jen {
             }
         }
 
-        try {
-            this.save.writeSave(this.storage);
-        } catch (JenException e) {
-            this.ui.printError(e);
-        }
+        writeSave();
 
         this.ui.bye();
     }
@@ -124,4 +112,16 @@ public class Jen {
     public boolean isRunning() {
         return isRunning;
     }
+
+    /**
+     * Saves the current task list to the save file.
+     */
+    private void writeSave() {
+        try {
+            this.save.writeSave(this.storage);
+        } catch (JenException e) {
+            this.ui.printError(e);
+        }
+    }
+
 }

@@ -42,102 +42,25 @@ public class Parser {
         case LIST:
             return new ListCommand();
         case TODO:
-            if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
-                // checks if input has sufficient arguments, and has a description
-                throw new JenException("Todo description cannot be empty!\n"
-                        + "Format: todo <desc>");
-            }
-            assert arrayInput.length > 1 : "Todo command does not have a description!";
-
-            return new AddCommand(new ToDo(arrayInput[1].trim()));
+            return parseTodoInput(arrayInput);
 
         case DEADLINE:
-            if (arrayInput.length < 2 || !arrayInput[1].trim().contains("/by")) {
-                // checks if has sufficient arguments for deadline command
-                throw new JenException("Deadline command incomplete!\n"
-                        + "Format: deadline <desc> /by <yyyy-mm-dd>");
-            }
-
-            assert arrayInput[1].contains("/by") : "Deadline command does not have a deadline!";
-
-            String[] deadline = arrayInput[1].split(" /by "); // returns [<desc>, <time>]
-            if (deadline.length < 2) {
-                throw new JenException("Deadline command does not have a deadline!\n"
-                        + "Format: deadline <desc> /by <yyyy-mm-dd>");
-            }
-            try {
-                // convert user input to LocalDate format
-                String dateString = deadline[1].trim();
-                LocalDate date = LocalDate.parse(dateString);
-                return new AddCommand(new Deadline(deadline[0].trim(), date));
-
-            } catch (DateTimeParseException e) {
-                throw new JenException("Deadline command has unreadable date format!\n"
-                        + "Format: deadline <desc> /by <yyyy-mm-dd>");
-            }
+            return parseDeadlineInput(arrayInput);
 
         case EVENT:
-            if (arrayInput.length < 2 || !arrayInput[1].trim().contains("/from")
-                    || !arrayInput[1].trim().contains("/to")) {
-                // checks if command contains the keywords
-                throw new JenException("Event command incomplete!\nFormat: event <desc> /from <time> /to <time>");
-            }
-
-            assert arrayInput[1].contains("/from") : "Event command does not have a start time!";
-            assert arrayInput[1].contains("/to") : "Event command does not have an end time!";
-
-            String[] event = arrayInput[1].split(" /from"); // splits into [<desc>, <time /to time>]
-            String desc = event[0].trim(); // extracts <desc>
-            String[] timeParts = event[1].split(" /to ", 2); // splits into [<time>, <time>]
-
-            if (timeParts.length < 2 || timeParts[0].trim().isEmpty() || timeParts[1].trim().isEmpty()) {
-                throw new JenException("Event command does not have a complete timeframe!\n"
-                        + "Format: event <desc> /from <time> /by <time>");
-            }
-
-            String from = timeParts[0].trim();
-            String to = timeParts[1].trim();
-
-            return new AddCommand(new Event(desc, from, to));
+            return parseEventInput(arrayInput);
 
         case DELETE:
-
-            if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
-                throw new JenException("delete command missing index!\n"
-                        + "Format: delete <index>");
-            }
-
-            assert arrayInput.length > 1 : "Delete command does not have an index!";
-
-            try {
-                return new DeleteCommand(Integer.parseInt(arrayInput[1]));
-            } catch (NumberFormatException e) {
-                throw new JenException("index is not a number!");
-            }
+            return parseDeleteInput(arrayInput);
 
         case MARK:
-            try {
-                return new MarkCommand(Integer.parseInt(arrayInput[1]));
-            } catch (NumberFormatException e) {
-                throw new JenException("index is not a number!");
-            }
+            return parseMarkInput(arrayInput);
 
         case UNMARK:
-            try {
-                return new UnmarkCommand(Integer.parseInt(arrayInput[1]));
-            } catch (NumberFormatException e) {
-                throw new JenException("index is not a number!");
-            }
+            return parseMarkInput(arrayInput);
 
         case FIND:
-            if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
-                throw new JenException("find command missing keyword!\n"
-                        + "Format: find <keyword>");
-            }
-
-            assert arrayInput.length > 1 : "Find command does not have a keyword!";
-
-            return new FindCommand(arrayInput[1].trim());
+            return parseFindInput(arrayInput);
 
         default:
             throw new JenException("Sorry, I don't understand your command");
@@ -188,5 +111,164 @@ public class Parser {
         } catch (IllegalArgumentException e) {
             return CommandType.UNKNOWN;
         }
+    }
+
+    /**
+     * Parses the user input for a todo command.
+     *
+     * @param arrayInput The user input split into an array.
+     * @return The corresponding {@code Command} object.
+     * @throws JenException If the input is invalid or incomplete.
+     */
+    private Command parseTodoInput(String[] arrayInput) throws JenException {
+        if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
+            // checks if input has sufficient arguments, and has a description
+            throw new JenException("Todo description cannot be empty!\n"
+                    + "Format: todo <desc>");
+        }
+        assert arrayInput.length > 1 : "Todo command does not have a description!";
+
+        return new AddCommand(new ToDo(arrayInput[1].trim()));
+    }
+
+    /**
+     * Parses the user input for a deadline command.
+     *
+     * @param arrayInput The user input split into an array.
+     * @return The corresponding {@code Command} object.
+     * @throws JenException If the input is invalid or incomplete.
+     */
+    private Command parseDeadlineInput(String[] arrayInput) throws JenException {
+        if (arrayInput.length < 2 || !arrayInput[1].trim().contains("/by")) {
+            // checks if has sufficient arguments for deadline command
+            throw new JenException("Deadline command incomplete!\n"
+                    + "Format: deadline <desc> /by <yyyy-mm-dd>");
+        }
+
+        assert arrayInput[1].contains("/by") : "Deadline command does not have a deadline!";
+
+        String[] deadline = arrayInput[1].split(" /by "); // returns [<desc>, <time>]
+        if (deadline.length < 2) {
+            throw new JenException("Deadline command does not have a deadline!\n"
+                    + "Format: deadline <desc> /by <yyyy-mm-dd>");
+        }
+        try {
+            // convert user input to LocalDate format
+            String dateString = deadline[1].trim();
+            LocalDate date = LocalDate.parse(dateString);
+            return new AddCommand(new Deadline(deadline[0].trim(), date));
+
+        } catch (DateTimeParseException e) {
+            throw new JenException("Deadline command has unreadable date format!\n"
+                    + "Format: deadline <desc> /by <yyyy-mm-dd>");
+        }
+    }
+    /**
+     * Parses the user input for an event command.
+     *
+     * @param arrayInput The user input split into an array.
+     * @return The corresponding {@code Command} object.
+     * @throws JenException If the input is invalid or incomplete.
+     */
+    private Command parseEventInput(String[] arrayInput) throws JenException {
+        if (arrayInput.length < 2 || !arrayInput[1].trim().contains("/from")
+                || !arrayInput[1].trim().contains("/to")) {
+            // checks if command contains the keywords
+            throw new JenException("Event command incomplete!\nFormat: event <desc> /from <time> /to <time>");
+        }
+
+        assert arrayInput[1].contains("/from") : "Event command does not have a start time!";
+        assert arrayInput[1].contains("/to") : "Event command does not have an end time!";
+
+        String[] event = arrayInput[1].split(" /from"); // splits into [<desc>, <time /to time>]
+        String desc = event[0].trim(); // extracts <desc>
+        String[] timeParts = event[1].split(" /to ", 2); // splits into [<time>, <time>]
+
+        if (timeParts.length < 2 || timeParts[0].trim().isEmpty() || timeParts[1].trim().isEmpty()) {
+            throw new JenException("Event command does not have a complete timeframe!\n"
+                    + "Format: event <desc> /from <time> /by <time>");
+        }
+
+        String from = timeParts[0].trim();
+        String to = timeParts[1].trim();
+
+        return new AddCommand(new Event(desc, from, to));
+    }
+
+    /**
+     * Parses the user input for a delete command.
+     *
+     * @param arrayInput The user input split into an array.
+     * @return The corresponding {@code Command} object.
+     * @throws JenException If the input is invalid or incomplete.
+     */
+    private Command parseDeleteInput(String[] arrayInput) throws JenException {
+        if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
+            throw new JenException("delete command missing index!\n"
+                    + "Format: delete <index>");
+        }
+
+        assert arrayInput.length > 1 : "Delete command does not have an index!";
+
+        try {
+            return new DeleteCommand(Integer.parseInt(arrayInput[1]));
+        } catch (NumberFormatException e) {
+            throw new JenException("index is not a number!");
+        }
+    }
+
+    /**
+     * Parses the user input for a mark command.
+     *
+     * @param arrayInput The user input split into an array.
+     * @return The corresponding {@code Command} object.
+     * @throws JenException If the input is invalid or incomplete.
+     */
+    private Command parseMarkInput(String[] arrayInput) throws JenException {
+        if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
+            throw new JenException("mark command missing index!\n"
+                    + "Format: mark <index>");
+        }
+
+        assert arrayInput.length > 1 : "Mark command does not have an index!";
+
+        try {
+            return new MarkCommand(Integer.parseInt(arrayInput[1]));
+        } catch (NumberFormatException e) {
+            throw new JenException("index is not a number!");
+        }
+    }
+
+    private Command parseUnmarkInput(String[] arrayInput) throws JenException {
+        if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
+            throw new JenException("unmark command missing index!\n"
+                    + "Format: unmark <index>");
+        }
+
+        assert arrayInput.length > 1 : "Unmark command does not have an index!";
+
+        try {
+            return new UnmarkCommand(Integer.parseInt(arrayInput[1]));
+        } catch (NumberFormatException e) {
+            throw new JenException("index is not a number!");
+        }
+    }
+
+    /**
+     * Parses the user input for a find command.
+     *
+     * @param arrayInput The user input split into an array.
+     * @return The corresponding {@code Command} object.
+     * @throws JenException If the input is invalid or incomplete.
+     */
+    private Command parseFindInput(String[] arrayInput) throws JenException {
+        if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
+            throw new JenException("find command missing keyword!\n"
+                    + "Format: find <keyword>");
+        }
+
+        assert arrayInput.length > 1 : "Find command does not have a keyword!";
+
+        return new FindCommand(arrayInput[1].trim());
     }
 }
