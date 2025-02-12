@@ -47,6 +47,8 @@ public class Parser {
                 throw new JenException("Todo description cannot be empty!\n"
                         + "Format: todo <desc>");
             }
+            assert arrayInput.length > 1 : "Todo command does not have a description!";
+
             return new AddCommand(new ToDo(arrayInput[1].trim()));
 
         case DEADLINE:
@@ -55,6 +57,9 @@ public class Parser {
                 throw new JenException("Deadline command incomplete!\n"
                         + "Format: deadline <desc> /by <yyyy-mm-dd>");
             }
+
+            assert arrayInput[1].contains("/by") : "Deadline command does not have a deadline!";
+
             String[] deadline = arrayInput[1].split(" /by "); // returns [<desc>, <time>]
             if (deadline.length < 2) {
                 throw new JenException("Deadline command does not have a deadline!\n"
@@ -78,6 +83,9 @@ public class Parser {
                 throw new JenException("Event command incomplete!\nFormat: event <desc> /from <time> /to <time>");
             }
 
+            assert arrayInput[1].contains("/from") : "Event command does not have a start time!";
+            assert arrayInput[1].contains("/to") : "Event command does not have an end time!";
+
             String[] event = arrayInput[1].split(" /from"); // splits into [<desc>, <time /to time>]
             String desc = event[0].trim(); // extracts <desc>
             String[] timeParts = event[1].split(" /to ", 2); // splits into [<time>, <time>]
@@ -98,6 +106,9 @@ public class Parser {
                 throw new JenException("delete command missing index!\n"
                         + "Format: delete <index>");
             }
+
+            assert arrayInput.length > 1 : "Delete command does not have an index!";
+
             try {
                 return new DeleteCommand(Integer.parseInt(arrayInput[1]));
             } catch (NumberFormatException e) {
@@ -123,6 +134,9 @@ public class Parser {
                 throw new JenException("find command missing keyword!\n"
                         + "Format: find <keyword>");
             }
+
+            assert arrayInput.length > 1 : "Find command does not have a keyword!";
+
             return new FindCommand(arrayInput[1].trim());
 
         default:
