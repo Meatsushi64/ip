@@ -42,12 +42,7 @@ public class Parser {
         case LIST:
             return new ListCommand();
         case TODO:
-            if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
-                // checks if input has sufficient arguments, and has a description
-                throw new JenException("Todo description cannot be empty!\n"
-                        + "Format: todo <desc>");
-            }
-            return new AddCommand(new ToDo(arrayInput[1].trim()));
+            return parseTodoInput(arrayInput);
 
         case DEADLINE:
             if (arrayInput.length < 2 || !arrayInput[1].trim().contains("/by")) {
@@ -174,5 +169,21 @@ public class Parser {
         } catch (IllegalArgumentException e) {
             return CommandType.UNKNOWN;
         }
+    }
+
+    /**
+     * Parses the user input for a todo command.
+     *
+     * @param arrayInput The user input split into an array.
+     * @return The corresponding {@code Command} object.
+     * @throws JenException If the input is invalid or incomplete.
+     */
+    private Command parseTodoInput(String[] arrayInput) throws JenException {
+        if (arrayInput.length < 2 || arrayInput[1].trim().isEmpty()) {
+            // checks if input has sufficient arguments, and has a description
+            throw new JenException("Todo description cannot be empty!\n"
+                    + "Format: todo <desc>");
+        }
+        return new AddCommand(new ToDo(arrayInput[1].trim()));
     }
 }
