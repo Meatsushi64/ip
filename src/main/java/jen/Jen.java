@@ -38,8 +38,6 @@ public class Jen {
     /**
      * The entry point for the Jen chatbot application.
      * It creates a new Jen instance and starts the chatbot.
-     *
-     * @param args Command-line arguments (not used).
      */
     public static void main(String[] args) {
         Jen chatbot = new Jen();
