@@ -25,6 +25,7 @@ public class UI {
         System.out.println(Msg.LINE);
         System.out.println(Msg.GREETING);
         System.out.println(Msg.LINE);
+        this.printMessage(Msg.GREETING);
     }
 
     /**
