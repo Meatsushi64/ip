@@ -287,11 +287,15 @@ public class Parser {
                     + "Format: note <index> <note>");
         }
         String[] noteParts = arrayInput[1].split(" ", 2);
-        int index = Integer.parseInt(noteParts[0]);
-        String note = noteParts[1];
-
 
         try {
+            int index = Integer.parseInt(noteParts[0]);
+
+            if (noteParts.length < 2 || noteParts[1].trim().isEmpty()) {
+                throw new JenException("note command missing note!\n"
+                        + "Format: note <index> <note>");
+            }
+            String note = noteParts[1];
             return new NoteCommand(index, note);
         } catch (NumberFormatException e) {
             throw new JenException("index is not a number!");

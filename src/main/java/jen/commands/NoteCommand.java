@@ -1,5 +1,6 @@
 package jen.commands;
 
+import jen.OutOfIndexException;
 import jen.Storage;
 import jen.UI;
 
@@ -20,9 +21,12 @@ public class NoteCommand extends Command {
     }
 
     @Override
-    public void run(Storage store, UI ui) {
-        store.addNoteToTask(this.index, this.note);
+    public void run(Storage storage, UI ui) throws OutOfIndexException {
+        if (!storage.isWithinSize(this.index)) {
+            throw new OutOfIndexException("Input index outside of list size");
+        }
+        storage.addNoteToTask(this.index, this.note);
         ui.printMessage("Note added to Task " + this.index + " : " + note + "\n");
-        ui.printMessage(store.taskToString(this.index));
+        ui.printMessage(storage.taskToString(this.index));
     }
 }

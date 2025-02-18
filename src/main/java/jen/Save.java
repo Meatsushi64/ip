@@ -75,6 +75,9 @@ public class Save {
             this.scanner = new Scanner(file);
             while (this.scanner.hasNext()) {
                 String line = this.scanner.nextLine();
+                if (line.isEmpty()) {
+                    continue;
+                }
                 Task t = parser.readSaveLine(line);
                 storage.store(t);
             }
